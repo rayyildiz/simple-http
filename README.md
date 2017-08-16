@@ -4,7 +4,7 @@ Simple Http Server
 
 Starts a simple http server to serve static files. Default port is ```8082``` and default folder is ```./static```
 
-Checkout and start 
+Checkout and build: 
     
     go get github.com/rayyildiz/simple-http
     go install github.com/rayyildiz/simple-http

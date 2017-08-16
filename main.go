@@ -13,15 +13,15 @@ const VERSION = `0.2`
 
 var (
 	folder  = flag.String("folder", "./static", "Static Folder Path")
-	port    = flag.Int("port", 8082, "display version info and exit")
-	version = flag.Bool("v", false, "display version info and exit")
+	port    = flag.Int("port", 8082, "set port (default 8082) ")
+	version = flag.Bool("v", false, "display version")
 	help    = flag.Bool("h", false, "display usage")
 )
 
 func middleware(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
-		h.ServeHTTP(w, r) // call original
+		h.ServeHTTP(w, r)
 		elapsed := time.Since(start)
 
 		url := r.URL.Path
