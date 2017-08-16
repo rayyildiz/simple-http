@@ -6,6 +6,7 @@ import (
 
 	"net/http"
 	"log"
+	"time"
 )
 
 const VERSION = `0.2`
@@ -16,6 +17,19 @@ var (
 	version = flag.Bool("v", false, "display version info and exit")
 	help    = flag.Bool("h", false, "display usage")
 )
+
+func middleware(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		h.ServeHTTP(w, r) // call original
+		elapsed := time.Since(start)
+
+		url := r.URL.Path
+		method := r.Method
+
+		log.Println(fmt.Sprintf("Elapsed time %s \t\t [%s] %s", elapsed, method, url))
+	})
+}
 
 func main() {
 
@@ -37,7 +51,10 @@ func main() {
 		return
 	}
 
-	http.Handle("/", http.FileServer(http.Dir(*folder)))
+	rootDir := http.Dir(*folder)
+	filerServer := http.FileServer(rootDir)
+
+	http.Handle("/", middleware(filerServer))
 
 	log.Printf("Simple-HTTP started to serve '%s' folder on port: %d\n", *folder, *port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), nil))
