@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 
-	"net/http"
 	"log"
+	"net/http"
 	"time"
 )
 
