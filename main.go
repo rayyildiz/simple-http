@@ -1,12 +1,14 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"flag"
 	"fmt"
+
+	"net/http"
+	"log"
 )
 
-const VERSION = `0.1`
+const VERSION = `0.2`
 
 var (
 	folder  = flag.String("folder", "./static", "Static Folder Path")
@@ -35,7 +37,8 @@ func main() {
 		return
 	}
 
-	router := gin.Default()
-	router.Static("/", *folder)
-	router.Run(fmt.Sprintf(":%d", *port))
+	http.Handle("/", http.FileServer(http.Dir(*folder)))
+
+	log.Printf("Simple-HTTP started to serve '%s' folder on port: %d\n", *folder, *port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), nil))
 }
