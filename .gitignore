@@ -1,6 +1,11 @@
 # Created by https://www.gitignore.io/api/go,vim,emacs
 
 .idea/
+*.iml
+access.log
+
+# Test folder
+static/ 
 dist/
 
 ### Emacs ###
