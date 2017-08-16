@@ -27,7 +27,7 @@ func middleware(h http.Handler) http.Handler {
 		url := r.URL.Path
 		method := r.Method
 
-		log.Println(fmt.Sprintf("Elapsed time %s \t\t [%s] %s", elapsed, method, url))
+		log.Println(fmt.Sprintf("Elapsed time %06s \t [%s] \t %s", elapsed, method, url))
 	})
 }
 
