@@ -1,5 +1,6 @@
 Simple Http Server
 ===
+[![Build Status](http://img.shields.io/travis/rayyildiz/simple-http.svg?style=flat-square)](https://travis-ci.org/rayyildiz/simple-http)  [![Go Report Card](https://goreportcard.com/badge/github.com/rayyildiz/simple-http)](https://goreportcard.com/report/github.com/rayyildiz/simple-http)
 
 
 Starts a simple http server to serve static files. Default port is ```8082``` and default folder is ```./static```
