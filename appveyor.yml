@@ -1,0 +1,24 @@
+version: "{build}"
+
+# Source Config
+clone_folder: c:\gopath\src\github.com\rayyildiz\simple-http
+
+environment:
+    GOPATH: c:\gopath
+    GOVERSION: 1.9.0
+
+init:
+    - git config --global core.autocrlf input
+
+install:
+    - choco install golang --version %GOVERSION% -y
+    - choco install bzr -y
+    - set Path=c:\go\bin;c:\gopath\bin;C:\Program Files (x86)\Bazaar\;C:\Program Files\Mercurial\%Path%
+    - go version
+    - go env
+
+build: false
+deploy: false
+
+test_script:
+    - go build github.com/rayyildiz/simple-http
