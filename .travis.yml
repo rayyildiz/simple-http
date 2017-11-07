@@ -1,10 +1,13 @@
 language: go
 go:
-    - 1.4.x
-    - 1.5.x
-    - 1.6.x
-    - 1.7.x
-    - 1.8.x
-    - master
+- 1.4.x
+- 1.5.x
+- 1.6.x
+- 1.7.x
+- 1.8.x
+- master
 script:
-    - go build
+- go build
+notifications:
+  slack:
+    secure: CzuJ2zAj7v2hkv1Uz0MocLeOjUs9OvxRJWNQaJEdySV22732mkpqo4/kdiMALW9ptv6hucBo9CHgDxUGoEAC+QeNnTfOkaLZpQmJlFstNU3SDIQqssSFw5YOMEPbs7ayahAdmO6wbqfYQzfyiQf1ahtQnmG/ygufYuCkG15Ui0vN5cMek3CrBh0nVWojuK1mkMxvMON2zMs8Og+KU2ugAK0nskADiUwuU8jNlX2MYBX+JqL3UBeJUuSKuOsYHeWzRcVAc4ZnrsTqzezhTepICGOmoKU+G8L4Ka7FxiVuckszKEQ/1lpSzQv6aJ3N1vCYH4iSpOYOThNir+Xf9A9hL9LL9JfeCiyQEafp1U19FOAurSkjhp98FIp452t+8j6+pfxHE97kht6UhGaoBn7yjwpDOUv4Xc+69nB0R0XSfnAbERMHSBRl3Kiseyl1HZaFkV+uJ0S7+0XY0GgTOKvhirN3IjjhkozO3uirnzGsaXIr413EmQFNaTpuQUeh06oXmCH3Ar1XvrPIaPK8UD8/CciWsLbpoD4r2UqTxBarGuEe455dlP2kIuN6YpEog3BvIQZR7ROsv8IudZlrwMWMixwrpzvrUWIHZvPbfAnIdyZjt6hEDcetezGOLxDwg544lDa6w4stp68Vp77i2MY+Uu4k02eA5wF9+ZgDsgM1Ip4=
