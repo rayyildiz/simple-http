@@ -3,13 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"log"
 	"net/http"
 	"time"
 )
 
-const VERSION = `0.2`
+const VERSION = `0.3`
 
 var (
 	folder  = flag.String("folder", "./static", "Static Folder Path")
@@ -58,4 +61,10 @@ func main() {
 
 	log.Printf("Simple-HTTP started to serve '%s' folder on port: %d\n", *folder, *port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), nil))
+
+	ch := make(chan os.Signal)
+	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
+	log.Println(<-ch)
+
+	log.Println("Stoppping app")
 }
