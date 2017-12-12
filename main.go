@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-const VERSION = `0.2`
+const VERSION = `0.3`
 
 var (
 	folder  = flag.String("folder", "./static", "Static Folder Path")

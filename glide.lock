@@ -1,0 +1,6 @@
+hash: 21fb9de88e72c5709619ac849e11f5e21b2fd3195f7bfff447f2e36aa1f56971
+updated: 2017-12-12T11:10:45.9314288+01:00
+imports:
+- name: github.com/cratonica/trayhost
+  version: 98495206fd960e78f5cdf88bb2b230d968e57261
+testImports: []

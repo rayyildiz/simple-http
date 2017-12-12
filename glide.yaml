@@ -1,0 +1,5 @@
+package: github.com/rayyildiz/simple-http
+homepage: https://github.com/rayyildiz/simple-http
+license: MIT
+import:
+- package: github.com/cratonica/trayhost

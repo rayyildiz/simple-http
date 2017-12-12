@@ -1,12 +1,13 @@
-package main
+package trayhost_test
 
 import (
 	"fmt"
-
-	"github.com/rayyildiz/simple-http/icons"
+	"github.com/cratonica/trayhost"
 	"runtime"
-	tr "github.com/cratonica/trayhost"
 )
+
+// Refer to documentation at http://github.com/cratonica/trayhost for generating this
+var iconData []byte
 
 func main() {
 	// EnterLoop must be called on the OS's main thread
@@ -17,14 +18,12 @@ func main() {
 		// want to start an HTTP server that the user can hit with a browser
 		// by clicking the tray icon.
 
-		tr.SetUrl("http://localhost")
-
 		// Be sure to call this to link the tray icon to the target url
-		tr.SetUrl("http://localhost:8080")
+		trayhost.SetUrl("http://github.com/cratonica/trayhost")
 	}()
 
 	// Enter the host system's event loop
-	tr.EnterLoop("Simple Http", icons.IconData)
+	trayhost.EnterLoop("My Go App", iconData)
 
 	// This is only reached once the user chooses the Exit menu item
 	fmt.Println("Exiting")
