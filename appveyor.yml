@@ -5,14 +5,14 @@ clone_folder: c:\gopath\src\github.com\rayyildiz\simple-http
 
 environment:
     GOPATH: c:\gopath
-    GOVERSION: 1.9.0
+    GOVERSION: 1.9.2
 
 init:
     - git config --global core.autocrlf input
 
 install:
     - choco install golang --version %GOVERSION% -y
-    - choco install gcc -y
+    - choco install mingw -y
     - set Path=c:\go\bin;c:\gopath\bin;C:\Program Files (x86)\Bazaar\;C:\Program Files\Mercurial\%Path%
     - go version
     - go env
