@@ -4,18 +4,21 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"os/signal"
-	"syscall"
+	"runtime"
 
 	"log"
 	"net/http"
 	"time"
+
+	tr "github.com/cratonica/trayhost"
+	"github.com/rayyildiz/simple-http/icon"
 )
 
-const VERSION = `0.3`
+// VERSION of simple-http.
+const VERSION = `0.4.1`
 
 var (
-	folder  = flag.String("folder", "./static", "Static Folder Path")
+	folder  = flag.String("directory", "./static", "Static Folder Path")
 	port    = flag.Int("port", 8082, "set port (default 8082) ")
 	version = flag.Bool("v", false, "display version")
 	help    = flag.Bool("h", false, "display usage")
@@ -43,28 +46,62 @@ func main() {
 	}
 
 	if *help {
-		fmt.Println("simple-http Help")
+		fmt.Printf("simple-http v%s Help \n", VERSION)
 		fmt.Println("--------------------------------------------------------------")
-		fmt.Println("simple-http -v                             => Display version")
-		fmt.Println("simple-http -h                             => Display usage")
-		fmt.Println("simple-http -folder=./static_folder        => Static Folder Path (default ./static)")
-		fmt.Println("simple-http -port=8082                     => Port ( default 8082) ")
-		fmt.Println("simple-http -folder=./static -port=8082    => Start s simple http server for ./static folder via 8082 port")
+		fmt.Println("simple-http -v                                => Display version")
+		fmt.Println("simple-http -h                                => Display usage")
+		fmt.Println("simple-http -directory=./static_folder        => Static Folder Path (default ./static)")
+		fmt.Println("simple-http -port=8082                        => Port ( default 8082) ")
+		fmt.Println("simple-http -directory=./static -port=8082    => Start s simple http server for ./static folder via 8082 port")
 
 		return
 	}
 
-	rootDir := http.Dir(*folder)
+	f, err := os.OpenFile("access.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	log.SetOutput(f)
+
+	srv := startHTTPServer(*port, *folder)
+	defer srv.Close()
+
+	runtime.LockOSThread()
+
+	go func() {
+		tr.SetUrl(fmt.Sprintf("http://localhost:%d", *port))
+	}()
+
+	tr.EnterLoop(fmt.Sprintf("Simple Http v%s", VERSION), icon.Data)
+
+	log.Println("Stoppping app")
+	err = srv.Close()
+	if err != nil {
+		log.Printf("stopping error, %v", err)
+		os.Exit(1)
+	}
+}
+
+func startHTTPServer(port int, folder string) *http.Server {
+	srv := &http.Server{Addr: fmt.Sprintf(":%d", port)}
+
+	rootDir := http.Dir(folder)
 	filerServer := http.FileServer(rootDir)
 
 	http.Handle("/", middleware(filerServer))
 
-	log.Printf("Simple-HTTP started to serve '%s' folder on port: %d\n", *folder, *port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), nil))
+	go func() {
+		if err := srv.ListenAndServe(); err != nil {
+			// cannot panic, because this probably is an intentional close
+			log.Printf("simple-http: start server error: %s", err)
+			fmt.Printf("simple-http: start server error: %s", err)
+			os.Exit(1)
+		}
+	}()
+	log.Printf("Simple-HTTP v%s started to serve '%s' folder on port: %d", VERSION, folder, port)
 
-	ch := make(chan os.Signal)
-	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
-	log.Println(<-ch)
-
-	log.Println("Stoppping app")
+	// returning reference so caller can call Shutdown()
+	return srv
 }
