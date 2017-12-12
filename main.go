@@ -3,6 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"log"
 	"net/http"
@@ -58,4 +61,10 @@ func main() {
 
 	log.Printf("Simple-HTTP started to serve '%s' folder on port: %d\n", *folder, *port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), nil))
+
+	ch := make(chan os.Signal)
+	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
+	log.Println(<-ch)
+
+	log.Println("Stoppping app")
 }
