@@ -26,4 +26,4 @@ Usage
 Credits
 ---
 
-* https://github.com/getlantern/systray
+* https://github.com/cratonica/trayhost
