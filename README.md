@@ -15,13 +15,13 @@ Checkout and build:
 Usage
 ---
 
-| Parameter                                  | Description                                                  |
-|:-------------------------------------------|:-------------------------------------------------------------|
-| simple-http -v                             | Display version                                              |
-| simple-http -h                             | Display usage                                                |
-| simple-http -directory=./static_folder     | Static Folder Path (Default .)                               |
-| simple-http -port=8082                     | Port (Default 8082)                                          |
-| simple-http -directory=./static -port=8082 | Start s simple http server for ./static folder via 8082 port |
+| Parameter                               | Description                                                  |
+|:----------------------------------------|:-------------------------------------------------------------|
+| simple-http -v                          | Display version                                              |
+| simple-http -h                          | Display usage                                                |
+| simple-http -directory=./static_folder  | Static Folder Path (Default .)                               |
+| simple-http -port=8082                  | Port (Default 8082)                                          |
+| simple-http -folder=./static -port=8082 | Start s simple http server for ./static folder via 8082 port |
 
 
 Credits
