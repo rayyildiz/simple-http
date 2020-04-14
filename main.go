@@ -18,7 +18,7 @@ import (
 const VERSION = `0.5.0`
 
 var (
-	folder  = flag.String("directory", ".", "Static Folder Path")
+	folder  = flag.String("folder", ".", "Static Folder Path")
 	port    = flag.Int("port", 8082, "set port (default 8082) ")
 	version = flag.Bool("v", false, "display version")
 	help    = flag.Bool("h", false, "display usage")
@@ -50,9 +50,9 @@ func main() {
 		fmt.Println("--------------------------------------------------------------")
 		fmt.Println("simple-http -v                                => Display version")
 		fmt.Println("simple-http -h                                => Display usage")
-		fmt.Println("simple-http -directory=./static_folder        => Static Folder Path (default  folder is .)")
+		fmt.Println("simple-http -folder=./static_folder        => Static Folder Path (default  folder is .)")
 		fmt.Println("simple-http -port=8082                        => Port (default 8082) ")
-		fmt.Println("simple-http -directory=./static -port=8082    => Start s simple http server for ./static folder via 8082 port")
+		fmt.Println("simple-http -folder=./static -port=8082    => Start s simple http server for ./static folder via 8082 port")
 
 		return
 	}
